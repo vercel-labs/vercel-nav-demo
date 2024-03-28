@@ -13,10 +13,10 @@ import {
   DropdownMenu,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { AvatarFallback, Avatar } from '@/components/ui/avatar';
 import Link from 'next/link';
+import Image from 'next/image';
 
-async function Team() {
+function Team({ name }: { name: string }) {
   return (
     <div className="flex items-center gap-2">
       <div className="p-2 rounded-full border border-slate-200">
@@ -28,7 +28,7 @@ async function Team() {
           width="16"
         />
       </div>
-      <span className="ml-1 text-lg font-medium">leerob</span>
+      <span className="ml-1 text-lg font-medium">{name}</span>
       <Badge className="text-sm font-medium" variant="secondary">
         Pro
       </Badge>
@@ -37,16 +37,25 @@ async function Team() {
   );
 }
 
-export default function Page() {
+export default async function Page({
+  params,
+}: {
+  params: {
+    team: string;
+  };
+}) {
+  let res = await fetch(`https://api.github.com/users/${params.team}`);
+  let { login, avatar_url } = await res.json();
+
   return (
-    <nav key="1" className="bg-white shadow">
+    <nav className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Team />
+                  <Team name={login} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
                   <DropdownMenuLabel>Select Team</DropdownMenuLabel>
@@ -64,10 +73,14 @@ export default function Page() {
             <Button className="justify-start gap-2" size="sm" variant="outline">
               Feedback
             </Button>
-            <BellIcon className="ml-4 h-5 w-5 text-slate-400" />
-            <Avatar className="ml-4">
-              <AvatarFallback>LR</AvatarFallback>
-            </Avatar>
+            <BellIcon className="mx-4 h-5 w-5 text-slate-400" />
+            <Image
+              alt="Avatar"
+              className="h-8 w-8 rounded-full"
+              height={32}
+              src={avatar_url}
+              width={32}
+            />
           </div>
         </div>
         <div className="flex justify-between h-12">
