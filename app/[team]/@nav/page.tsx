@@ -61,9 +61,15 @@ export default async function Page({
                   <DropdownMenuLabel>Select Team</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>Team 1</DropdownMenuItem>
-                    <DropdownMenuItem>Team 2</DropdownMenuItem>
-                    <DropdownMenuItem>Team 3</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/rauchg">rauchg</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/shadcn">shadcn</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/leerob">leerob</Link>
+                    </DropdownMenuItem>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
