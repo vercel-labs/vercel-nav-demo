@@ -16,10 +16,20 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { Suspense } from 'react';
 
-function Team({ name }: { name: string }) {
+async function getTeam(team: string) {
+  let res = await fetch(`https://api.github.com/users/${team}`);
+  let { login, avatar_url } = await res.json();
+
+  return {login, avatar_url}
+}
+
+async function Team({ id }: { id: string }) {
+  const {login: name} = await getTeam(id);
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 h-8">
       <div className="p-2 rounded-full border border-slate-200">
         <img
           alt="ACME Logo"
@@ -38,6 +48,20 @@ function Team({ name }: { name: string }) {
   );
 }
 
+async function Avatar({id}: {id: string}) {
+  const {avatar_url} = await getTeam(id);
+
+  return (
+    <Image
+      alt="Avatar"
+      className="h-8 w-8 rounded-full"
+      height={32}
+      src={avatar_url}
+      width={32}
+    />
+  )
+}
+
 export default async function Page({
   params,
 }: {
@@ -46,9 +70,6 @@ export default async function Page({
     section?: string[]
   };
 }) {
-  let res = await fetch(`https://api.github.com/users/${params.team}`);
-  let { login, avatar_url } = await res.json();
-
   return (
     <nav className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,8 +77,10 @@ export default async function Page({
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Team name={login} />
+                <DropdownMenuTrigger>
+                  <Suspense fallback={<div className="h-8 w-48 bg-slate-200 animate-pulse" />}>
+                    <Team id={params.team} />
+                  </Suspense>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
                   <DropdownMenuLabel>Select Team</DropdownMenuLabel>
@@ -88,13 +111,9 @@ export default async function Page({
               Feedback
             </Button>
             <BellIcon className="mx-4 h-5 w-5 text-slate-400" />
-            <Image
-              alt="Avatar"
-              className="h-8 w-8 rounded-full"
-              height={32}
-              src={avatar_url}
-              width={32}
-            />
+            <Suspense fallback={<div className="w-8 h-8 bg-slate-200 rounded-full animate-pulse" />}>
+              <Avatar id={params.team} />
+            </Suspense>
           </div>
         </div>
         <div className="flex justify-between h-12">
