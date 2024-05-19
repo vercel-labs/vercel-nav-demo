@@ -16,11 +16,7 @@ import { Suspense } from 'react';
 import { BellIcon, ChevronDownIcon } from 'lucide-react';
 
 async function getTeam(team: string) {
-  let res = await fetch(`https://api.github.com/users/${team}`, {
-    headers: {
-      'Authorization': `Basic ${btoa(`${process.env.GITHUB_USER}:${process.env.GITHUB_TOKEN}`)}`,
-    }
-  });
+  let res = await fetch(`https://api.github.com/users/${team}`);
   let { login, avatar_url } = await res.json();
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
