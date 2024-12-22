@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
-import { GeistSans } from 'geist/font/sans';
+import { Geist } from 'next/font/google';
 import './globals.css';
+
+const geist = Geist({
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Next.js Parallel Routes Example',
@@ -13,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en" className={geist.className}>
       <body>{children}</body>
     </html>
   );

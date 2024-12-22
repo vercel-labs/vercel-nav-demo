@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 function Team({ name }: { name: string }) {
   return (
@@ -43,14 +44,14 @@ export default async function Page({
 }: {
   params: {
     team: string;
-    section?: string[]
+    section?: string[];
   };
 }) {
   let res = await fetch(`https://api.github.com/users/${params.team}`);
   let { login, avatar_url } = await res.json();
 
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
@@ -64,17 +65,32 @@ export default async function Page({
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <Link href="/rauchg">
-                      <DropdownMenuItem className={cn({"bg-slate-50": params.team === 'rauchg'}, "cursor-pointer")}>
+                      <DropdownMenuItem
+                        className={cn(
+                          { 'bg-slate-50': params.team === 'rauchg' },
+                          'cursor-pointer',
+                        )}
+                      >
                         rauchg
                       </DropdownMenuItem>
                     </Link>
                     <Link href="/shadcn">
-                      <DropdownMenuItem className={cn({"bg-slate-50": params.team === 'shadcn'}, "cursor-pointer")}>
+                      <DropdownMenuItem
+                        className={cn(
+                          { 'bg-slate-50': params.team === 'shadcn' },
+                          'cursor-pointer',
+                        )}
+                      >
                         shadcn
                       </DropdownMenuItem>
                     </Link>
                     <Link href="/leerob">
-                      <DropdownMenuItem className={cn({"bg-slate-50": params.team === 'leerob'}, "cursor-pointer")}>
+                      <DropdownMenuItem
+                        className={cn(
+                          { 'bg-slate-50': params.team === 'leerob' },
+                          'cursor-pointer',
+                        )}
+                      >
                         leerob
                       </DropdownMenuItem>
                     </Link>
@@ -84,7 +100,11 @@ export default async function Page({
             </div>
           </div>
           <div className="flex items-center">
-            <Button className="justify-start gap-2" size="sm" variant="outline">
+            <Button
+              className="hidden sm:flex justify-start gap-2 border-gray-200"
+              size="sm"
+              variant="outline"
+            >
               Feedback
             </Button>
             <BellIcon className="mx-4 h-5 w-5 text-slate-400" />
@@ -98,98 +118,128 @@ export default async function Page({
           </div>
         </div>
         <div className="flex justify-between h-12">
-          <div className="hidden sm:ml-0 sm:flex sm:space-x-8">
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": !params.section?.length},
-              )}
-              href={`/${params.team}`}
-            >
-              Overview
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'integrations'},
-              )}
-              href={`/${params.team}/integrations`}
-            >
-              Integrations
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'activity'},
-              )}
-              href={`/${params.team}/activity`}
-            >
-              Activity
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'domains'},
-              )}
-              href={`/${params.team}/domains`}
-            >
-              Domains
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'usage'},
-              )}
-              href={`/${params.team}/usage`}
-            >
-              Usage
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'monitoring'},
-              )}
-              href={`/${params.team}/monitoring`}
-            >
-              Monitoring
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'storage'},
-              )}
-              href={`/${params.team}/storage`}
-            >
-              Storage
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'ai'},
-              )}
-              href={`/${params.team}/ai`}
-            >
-              AI
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'support'},
-              )}
-              href={`/${params.team}/support`}
-            >
-              Support
-            </Link>
-            <Link
-              className={cn(
-                "text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out",
-                {"border-b-2 border-black text-slate-900 focus:border-indigo-700": params.section?.[0] === 'settings'},
-              )}
-              href={`/${params.team}/settings`}
-            >
-              Settings
-            </Link>
-          </div>
+          <ScrollArea>
+            <div className="h-12 ml-0 flex space-x-8">
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      !params.section?.length,
+                  },
+                )}
+                href={`/${params.team}`}
+                prefetch={true}
+              >
+                Overview
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'integrations',
+                  },
+                )}
+                href={`/${params.team}/integrations`}
+                prefetch={true}
+              >
+                Integrations
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'activity',
+                  },
+                )}
+                href={`/${params.team}/activity`}
+                prefetch={true}
+              >
+                Activity
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'domains',
+                  },
+                )}
+                href={`/${params.team}/domains`}
+                prefetch={true}
+              >
+                Domains
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'usage',
+                  },
+                )}
+                href={`/${params.team}/usage`}
+                prefetch={true}
+              >
+                Usage
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'observability',
+                  },
+                )}
+                href={`/${params.team}/observability`}
+                prefetch={true}
+              >
+                Observability
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'storage',
+                  },
+                )}
+                href={`/${params.team}/storage`}
+                prefetch={true}
+              >
+                Storage
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'support',
+                  },
+                )}
+                href={`/${params.team}/support`}
+                prefetch={true}
+              >
+                Support
+              </Link>
+              <Link
+                className={cn(
+                  'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
+                  {
+                    'border-b-2 border-black text-slate-900 focus:border-indigo-700':
+                      params.section?.[0] === 'settings',
+                  },
+                )}
+                href={`/${params.team}/settings`}
+                prefetch={true}
+              >
+                Settings
+              </Link>
+              <ScrollBar orientation="horizontal" />
+            </div>
+          </ScrollArea>
         </div>
       </div>
     </nav>
