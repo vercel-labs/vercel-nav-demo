@@ -1,14 +1,15 @@
 import DeploymentsTable from '@/components/deployments';
 
-export default function Page({
+export default async function Page({
   params,
 }: {
-  params: {
+  params: Promise<{
     team: string;
     section?: string[];
-  };
+  }>;
 }) {
-  let section = params.section?.[0] || 'home';
+  const { section: sectionParam } = await params;
+  let section = sectionParam?.[0] || 'home';
   if (section === 'home') {
     return (
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

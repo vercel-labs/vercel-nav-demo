@@ -2,14 +2,16 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
-export default function Page({
+export default async function Page({
   params,
 }: {
-  params: {
+  params: Promise<{
     team: string;
     section?: string[];
-  };
+  }>;
 }) {
+  const { team, section } = await params;
+
   return (
     <div className="flex justify-between h-12">
       <ScrollArea>
@@ -19,10 +21,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  !params.section?.length,
+                  !section?.length,
               },
             )}
-            href={`/${params.team}`}
+            href={`/${team}`}
             prefetch={true}
           >
             Overview
@@ -32,10 +34,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'integrations',
+                  section?.[0] === 'integrations',
               },
             )}
-            href={`/${params.team}/integrations`}
+            href={`/${team}/integrations`}
             prefetch={true}
           >
             Integrations
@@ -45,10 +47,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'activity',
+                  section?.[0] === 'activity',
               },
             )}
-            href={`/${params.team}/activity`}
+            href={`/${team}/activity`}
             prefetch={true}
           >
             Activity
@@ -58,10 +60,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'domains',
+                  section?.[0] === 'domains',
               },
             )}
-            href={`/${params.team}/domains`}
+            href={`/${team}/domains`}
             prefetch={true}
           >
             Domains
@@ -71,10 +73,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'usage',
+                  section?.[0] === 'usage',
               },
             )}
-            href={`/${params.team}/usage`}
+            href={`/${team}/usage`}
             prefetch={true}
           >
             Usage
@@ -84,10 +86,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'observability',
+                  section?.[0] === 'observability',
               },
             )}
-            href={`/${params.team}/observability`}
+            href={`/${team}/observability`}
             prefetch={true}
           >
             Observability
@@ -97,10 +99,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'storage',
+                  section?.[0] === 'storage',
               },
             )}
-            href={`/${params.team}/storage`}
+            href={`/${team}/storage`}
             prefetch={true}
           >
             Storage
@@ -110,10 +112,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'support',
+                  section?.[0] === 'support',
               },
             )}
-            href={`/${params.team}/support`}
+            href={`/${team}/support`}
             prefetch={true}
           >
             Support
@@ -123,10 +125,10 @@ export default function Page({
               'text-slate-500 hover:text-slate-700 inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 focus:outline-none focus:text-slate-700 focus:border-slate-300 transition duration-150 ease-in-out',
               {
                 'border-b-2 border-black text-slate-900 focus:border-indigo-700':
-                  params.section?.[0] === 'settings',
+                  section?.[0] === 'settings',
               },
             )}
-            href={`/${params.team}/settings`}
+            href={`/${team}/settings`}
             prefetch={true}
           >
             Settings

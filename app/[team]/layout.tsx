@@ -61,15 +61,17 @@ async function Avatar({ id }: { id: string }) {
   );
 }
 
-export default function SectionLayout({
+export default async function SectionLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     team: string;
-  };
+  }>;
 }) {
+  const { team } = await params;
+
   return (
     <>
       <nav className="bg-white shadow">
@@ -84,7 +86,7 @@ export default function SectionLayout({
                         <div className="h-8 w-48 bg-slate-200 animate-pulse" />
                       }
                     >
-                      <Team id={params.team} />
+                      <Team id={team} />
                     </Suspense>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56">
@@ -94,7 +96,7 @@ export default function SectionLayout({
                       <Link href="/rauchg">
                         <DropdownMenuItem
                           className={cn(
-                            { 'bg-slate-50': params.team === 'rauchg' },
+                            { 'bg-slate-50': team === 'rauchg' },
                             'cursor-pointer',
                           )}
                         >
@@ -104,7 +106,7 @@ export default function SectionLayout({
                       <Link href="/shadcn">
                         <DropdownMenuItem
                           className={cn(
-                            { 'bg-slate-50': params.team === 'shadcn' },
+                            { 'bg-slate-50': team === 'shadcn' },
                             'cursor-pointer',
                           )}
                         >
@@ -114,7 +116,7 @@ export default function SectionLayout({
                       <Link href="/leerob">
                         <DropdownMenuItem
                           className={cn(
-                            { 'bg-slate-50': params.team === 'leerob' },
+                            { 'bg-slate-50': team === 'leerob' },
                             'cursor-pointer',
                           )}
                         >
@@ -140,7 +142,7 @@ export default function SectionLayout({
                   <div className="w-8 h-8 bg-slate-200 rounded-full animate-pulse" />
                 }
               >
-                <Avatar id={params.team} />
+                <Avatar id={team} />
               </Suspense>
             </div>
           </div>
